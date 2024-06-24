@@ -1,2 +1,2 @@
-# free_code_camp_data_eng
-Repo for simpe data project
+# Sample project
+This project is a recap about ELT project, based in [this custom repo](https://github.com/justinbchau/custom-elt-project/)
