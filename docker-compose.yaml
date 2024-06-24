@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  source_postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: postgres_pwd
+      - POSTGRES_DB: source_db
+    ports:
+      - 5432:5432
+    networks:
+      - elt_network
+    volumes:
+      - ./source_db_init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  destination_postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: postgres_pwd
+      - POSTGRES_DB: destination_db
+    ports:
+      - 5432:5432
+    networks:
+      - elt_network
+
+  elt:
+    build:
+      context: ./elt
+      dockerfile: dockerfile
+    command: [ "python", "main.py" ]
+    networks:
+      - elt_network
+    depends_on:
+      - source_postgres
+      - destination_postgres
+
+networks:
+  elt_network:
+    driver: bridge
