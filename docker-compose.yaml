@@ -4,9 +4,9 @@ services:
   source_postgres:
     image: postgres:latest
     environment:
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: postgres_pwd
-      - POSTGRES_DB: source_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_pwd
+      POSTGRES_DB: source_db
     ports:
       - 5432:5432
     networks:
@@ -17,9 +17,9 @@ services:
   destination_postgres:
     image: postgres:latest
     environment:
-      - POSTGRES_USER: postgres
-      - POSTGRES_PASSWORD: postgres_pwd
-      - POSTGRES_DB: destination_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_pwd
+      POSTGRES_DB: destination_db
     ports:
       - 5432:5432
     networks:
@@ -28,7 +28,7 @@ services:
   elt:
     build:
       context: ./elt
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     command: [ "python", "main.py" ]
     networks:
       - elt_network
