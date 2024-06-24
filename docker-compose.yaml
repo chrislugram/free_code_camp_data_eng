@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   source_postgres:
     image: postgres:latest
@@ -8,7 +6,7 @@ services:
       POSTGRES_PASSWORD: postgres_pwd
       POSTGRES_DB: source_db
     ports:
-      - 5432:5432
+      - "5433:5432"
     networks:
       - elt_network
     volumes:
@@ -21,7 +19,7 @@ services:
       POSTGRES_PASSWORD: postgres_pwd
       POSTGRES_DB: destination_db
     ports:
-      - 5432:5432
+      - "5434:5432"
     networks:
       - elt_network
 
@@ -29,7 +27,6 @@ services:
     build:
       context: ./elt
       dockerfile: Dockerfile
-    command: [ "python", "main.py" ]
     networks:
       - elt_network
     depends_on:
